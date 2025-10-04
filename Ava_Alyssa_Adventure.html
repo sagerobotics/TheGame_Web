@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ava & Alyssa's Adventure — DPad</title>
+  <style>
+    body { margin: 0; background: #87CEEB; overflow: hidden; }
+    canvas { display:block; margin:auto; background:#87CEEB; }
+    @media (max-width:600px){ canvas{ width:100%; height:auto } }
+
+    /* --- DPad styles --- */
+    #dpad {
+      position: fixed;
+      bottom: 20px; left: 20px;
+      display: grid;
+      grid-template-columns: 60px 60px 60px;
+      grid-template-rows: 60px 60px;
+      gap: 6px;
+      touch-action: none;
+      user-select: none;
+      z-index: 5; /* above canvas */
+    }
+    .btn {
+      background: rgba(0,0,0,0.4);
+      color: white;
+      font-size: 28px;
+      font-weight: bold;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .btn:active { background: rgba(0,0,0,0.7); }
+
+    /* --- Title screen overlay --- */
+    #titleScreen {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: #87CEEB;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 10;
+      overflow: hidden;
+    }
+    #titleImage {
+      width: 250px;
+      transform: translateY(-100%); /* start above */
+      animation: dropIn 1.2s ease forwards;
+    }
+    @keyframes dropIn {
+      to { transform: translateY(0); }
+    }
+    .charSelect {
+      margin-top: 20px;
+      display: flex;
+      gap: 20px;
+    }
+    .charBtn {
+      padding: 12px 24px;
+      font-size: 22px;
+      font-weight: bold;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      background: #ff69b4;
+      color: white;
+      transition: transform 0.2s;
+    }
+    .charBtn:hover {
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <!-- Title Screen -->
+  <div id="titleScreen">
+    <img id="titleImage" src="title.png" alt="Title Logo" />
+    <div class="charSelect">
+      <button class="charBtn" data-char="Ava">Play as Ava</button>
+      <button class="charBtn" data-char="Alyssa">Play as Alyssa</button>
+    </div>
+  </div>
+
+  <!-- Game Canvas -->
+  <canvas id="game" width="800" height="775"></canvas>
+  <audio id="coinSound" src="coin.wav" preload="auto"></audio>
+
+  <!-- --- DPad container --- -->
+  <div id="dpad">
+    <div></div> <div class="btn" data-key="ArrowUp">⬆️</div> <div></div>
+    <div class="btn" data-key="ArrowLeft">⬅️</div> <div></div> <div class="btn" data-key="ArrowRight">➡️</div>
+  </div>
+
+  <!-- Reference external JS -->
+  <script>
+    // store chosen character globally
+    window.selectedCharacter = null;
+
+    document.querySelectorAll(".charBtn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const choice = btn.getAttribute("data-char");
+        window.selectedCharacter = "girl-" + choice + ".png"; 
+        document.getElementById("titleScreen").style.display = "none";
+        // at this point, game.js will start and can use window.selectedCharacter
+      });
+    });
+  </script>
+    //<script src="main.js"></script>
+></script>
+</body>
+</html>

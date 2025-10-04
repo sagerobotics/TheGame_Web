@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyFirstHTMLModification</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Ava & Alyssa McClarty</h1>
+    <h3>The Time Is Now to Play</h3>
+  </header>
+
+  <img src="Girls_Data.jpg" alt="Cool JPEG" class="fancy-img">
+
+  <pre id="codeBlock">Loading main.js...</pre>
+  <div id="output">Code output: </div>
+
+  <button class="Stargate" onclick="window.open('https://www.mgm.com/franchise/stargate', '_blank')">
+    Stargate
+  </button>
+
+  <!-- Optional YouTube video -->
+  <!--
+  <div class="video-wrapper">
+    <iframe src="https://www.youtube.com/embed/4UfYFya0nTo" 
+      title="YouTube video player"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen>
+    </iframe>
+  </div>
+  -->
+
+  <script>
+    (function () {
+      const outputDiv = document.getElementById("output");
+      const oldLog = console.log;
+      console.log = function (...args) {
+        args.forEach(arg => {
+          outputDiv.innerHTML += arg + "<br>";
+        });
+        oldLog.apply(console, args);
+      };
+    })();
+
+    setInterval(() => {
+      location.reload();
+    }, 20000);
+
+    fetch("main.js")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("codeBlock").textContent = data;
+        const script = document.createElement("script");
+        script.textContent = data;
+        document.body.appendChild(script);
+      })
+      .catch(err => {
+        document.getElementById("codeBlock").textContent =
+          "Error loading main.js: " + err;
+      });
+  </script>
+</body>
+</html>
