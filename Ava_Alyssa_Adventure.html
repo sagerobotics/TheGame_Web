@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ava & Alyssa's Adventure — Game Select</title>
+  <style>
+    body { margin: 0; background: #87CEEB; overflow: hidden; }
+    canvas { display: block; margin: auto; background: #87CEEB; }
+    @media (max-width:600px){ canvas{ width:100%; height:auto } }
+
+    /* --- DPad styles --- */
+    #dpad {
+      position: fixed;
+      bottom: 20px; left: 20px;
+      display: grid;
+      grid-template-columns: 60px 60px 60px;
+      grid-template-rows: 60px 60px;
+      gap: 6px;
+      touch-action: none;
+      user-select: none;
+      z-index: 5;
+    }
+    .btn {
+      background: rgba(0,0,0,0.4);
+      color: white;
+      font-size: 28px;
+      font-weight: bold;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .btn:active { background: rgba(0,0,0,0.7); }
+
+    /* --- Title screen overlay --- */
+    #titleScreen {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: #87CEEB;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 10;
+      overflow: hidden;
+    }
+    #titleImage {
+      width: 250px;
+      transform: translateY(-100%);
+      animation: dropIn 1.2s ease forwards;
+    }
+    @keyframes dropIn { to { transform: translateY(0); } }
+    .charSelect { margin-top: 20px; display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+    .charBtn {
+      padding: 12px 24px;
+      font-size: 22px;
+      font-weight: bold;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      background: #ff69b4;
+      color: white;
+      transition: transform 0.2s;
+    }
+    .charBtn:hover { transform: scale(1.1); }
+
+    /* --- Return Button (when game ends) --- */
+    #returnBtn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 10px 18px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      background: #333;
+      color: white;
+      cursor: pointer;
+      display: none;
+      z-index: 15;
+    }
+    #returnBtn:hover { background: #555; }
+  </style>
+</head>
+<body>
+  <!-- Title Screen -->
+  <div id="titleScreen">
+    <img id="titleImage" src="title.png" alt="Title Logo" />
+    <div class="charSelect">
+      <button class="charBtn" data-game="frogger.js">🐸 Play Frogger</button>
+      <button class="charBtn" data-game="game.js">🎮 Adventure Girl</button>
+      <button class="charBtn" data-game="spaceinvaders.js">⭐ Space Invaders</button>
+    </div>
+  </div>
+
+  <!-- Game Canvas -->
+  <canvas id="game" width="800" height="775"></canvas>
+  <audio id="coinSound" src="coin.wav" preload="auto"></audio>
+
+  <!-- DPad container -->
+  <div id="dpad">
+    <div></div> <div class="btn" data-key="ArrowUp">⬆️</div> <div></div>
+    <div class="btn" data-key="ArrowLeft">⬅️</div> <div></div> <div class="btn" data-key="ArrowRight">➡️</div>
+  </div>
+
+  <!-- Return to Menu -->
+  <button id="returnBtn">⬅️ Return to Menu</button>
+
+  <script>
+    window.selectedCharacter = null;
+    let activeScript = null;
+
+    // Load external JS dynamically
+    function loadScript(file) {
+      if (activeScript) {
+        activeScript.remove(); // clean up old game script
+      }
+
+      const script = document.createElement("script");
+      script.src = file + "?v=" + Date.now(); // prevent caching
+      script.onload = () => console.log(file + " loaded successfully ✅");
+      script.onerror = () => console.error("Failed to load " + file);
+      document.body.appendChild(script);
+      activeScript = script;
+    }
+
+    // Show the title screen again (called from games)
+    window.returnToMenu = function() {
+        window.location.reload(); // Simple reload to reset state
+      if (activeScript) activeScript.remove();
+      document.getElementById("titleScreen").style.display = "flex";
+      document.getElementById("returnBtn").style.display = "none";
+      const ctx = document.getElementById("game").getContext("2d");
+      ctx.clearRect(0, 0, 800, 775);
+    };
+
+    // Menu buttons
+    document.querySelectorAll(".charBtn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const file = btn.getAttribute("data-game");
+        document.getElementById("titleScreen").style.display = "none";
+        document.getElementById("returnBtn").style.display = "block";
+        loadScript(file);
+      });
+    });
+
+    // Manual return button
+    document.getElementById("returnBtn").addEventListener("click", window.returnToMenu);
+  </script>
+</body>
+</html>
