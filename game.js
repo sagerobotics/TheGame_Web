@@ -166,6 +166,28 @@ function update() {
         frameX = 0;
         frameY = 0;
     }
+// --- Action Button (Spacebar Equivalent) ---
+const actionBtn = document.getElementById("actionBtn");
+if (actionBtn) {
+  const press = () => { keys["Space"] = true; };
+  const release = () => { keys["Space"] = false; };
+
+  actionBtn.addEventListener("mousedown", press);
+  actionBtn.addEventListener("mouseup", release);
+  actionBtn.addEventListener("mouseleave", release);
+
+  actionBtn.addEventListener("touchstart", e => {
+    e.preventDefault();
+    press();
+  }, { passive: false });
+  
+  actionBtn.addEventListener("touchend", e => {
+    e.preventDefault();
+    release();
+  }, { passive: false });
+  
+  actionBtn.addEventListener("touchcancel", release);
+}
 
     // Platform collision
     player.onGround = false;
@@ -385,3 +407,4 @@ function drawBeamEffect(player) {
 
 function loop() { update(); draw(); requestAnimationFrame(loop); }
 loop();
+

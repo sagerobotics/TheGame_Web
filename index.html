@@ -34,6 +34,32 @@
     }
     .btn:active { background: rgba(0,0,0,0.7); }
 
+    /* --- Action Button (Spacebar Equivalent) --- */
+    #actionBtn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 80px;
+      height: 80px;
+      background: rgba(0,0,0,0.5);
+      color: white;
+      border: 3px solid rgba(255,255,255,0.7);
+      border-radius: 50%;
+      font-size: 28px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 6;
+      user-select: none;
+      touch-action: manipulation;
+    }
+    #actionBtn:active {
+      background: rgba(0,0,0,0.8);
+      transform: scale(0.95);
+    }
+
     /* --- Title screen overlay --- */
     #titleScreen {
       position: fixed;
@@ -70,7 +96,7 @@
     #returnBtn {
       position: fixed;
       bottom: 20px;
-      right: 20px;
+      right: 130px;
       padding: 10px 18px;
       font-size: 18px;
       border: none;
@@ -105,6 +131,9 @@
     <div class="btn" data-key="ArrowLeft">⬅️</div> <div></div> <div class="btn" data-key="ArrowRight">➡️</div>
   </div>
 
+  <!-- Action Button (Spacebar Equivalent) -->
+  <div id="actionBtn">🅰️</div>
+
   <!-- Return to Menu -->
   <button id="returnBtn">⬅️ Return to Menu</button>
 
@@ -114,9 +143,7 @@
 
     // Load external JS dynamically
     function loadScript(file) {
-      if (activeScript) {
-        activeScript.remove(); // clean up old game script
-      }
+      if (activeScript) activeScript.remove(); // clean up old game script
 
       const script = document.createElement("script");
       script.src = file + "?v=" + Date.now(); // prevent caching
@@ -128,7 +155,7 @@
 
     // Show the title screen again (called from games)
     window.returnToMenu = function() {
-        window.location.reload(); // Simple reload to reset state
+      window.location.reload(); // Simple reload to reset state
       if (activeScript) activeScript.remove();
       document.getElementById("titleScreen").style.display = "flex";
       document.getElementById("returnBtn").style.display = "none";
@@ -148,6 +175,19 @@
 
     // Manual return button
     document.getElementById("returnBtn").addEventListener("click", window.returnToMenu);
+
+    // --- Action Button (Spacebar Trigger) ---
+    const actionBtn = document.getElementById("actionBtn");
+    actionBtn.addEventListener("click", () => {
+      // Dispatch a keyboard event for the spacebar
+      const spaceEvent = new KeyboardEvent("keydown", { key: " " });
+      document.dispatchEvent(spaceEvent);
+    });
+    actionBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      const spaceEvent = new KeyboardEvent("keydown", { key: " " });
+      document.dispatchEvent(spaceEvent);
+    }, { passive: false });
   </script>
 </body>
 </html>
