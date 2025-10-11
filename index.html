@@ -2,17 +2,31 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <title>Ava & Alyssa's Adventure — Game Select</title>
   <style>
-    body { margin: 0; background: #87CEEB; overflow: hidden; }
-    canvas { display: block; margin: auto; background: #87CEEB; }
-    @media (max-width:600px){ canvas{ width:100%; height:auto } }
+    body {
+      margin: 0;
+      background: #87CEEB;
+      overflow: hidden;
+      font-family: system-ui, -apple-system, sans-serif;
+      touch-action: manipulation;
+    }
 
-    /* --- DPad styles --- */
+    canvas {
+      display: block;
+      margin: auto;
+      background: #87CEEB;
+      width: 100%;
+      height: auto;
+      max-width: 800px;
+    }
+
+    /* --- Responsive DPad --- */
     #dpad {
       position: fixed;
-      bottom: 20px; left: 20px;
+      bottom: 5vh;
+      left: 5vw;
       display: grid;
       grid-template-columns: 60px 60px 60px;
       grid-template-rows: 60px 60px;
@@ -21,8 +35,9 @@
       user-select: none;
       z-index: 5;
     }
+
     .btn {
-      background: rgba(0,0,0,0.4);
+      background: rgba(0, 0, 0, 0.4);
       color: white;
       font-size: 28px;
       font-weight: bold;
@@ -31,21 +46,23 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
+      transition: background 0.15s ease;
     }
-    .btn:active { background: rgba(0,0,0,0.7); }
 
-    /* --- Action Button (Spacebar Equivalent) --- */
+    .btn:active { background: rgba(0, 0, 0, 0.7); }
+
+    /* --- Action Button --- */
     #actionBtn {
       position: fixed;
-      bottom: 30px;
-      right: 30px;
-      width: 80px;
-      height: 80px;
+      bottom: 6vh;
+      right: 6vw;
+      width: 70px;
+      height: 70px;
       background: rgba(0,0,0,0.5);
       color: white;
       border: 3px solid rgba(255,255,255,0.7);
       border-radius: 50%;
-      font-size: 28px;
+      font-size: 26px;
       font-weight: bold;
       display: flex;
       align-items: center;
@@ -55,6 +72,7 @@
       user-select: none;
       touch-action: manipulation;
     }
+
     #actionBtn:active {
       background: rgba(0,0,0,0.8);
       transform: scale(0.95);
@@ -70,35 +88,55 @@
       justify-content: center;
       flex-direction: column;
       z-index: 10;
+      padding: 5vw;
       overflow: hidden;
+      text-align: center;
     }
+
     #titleImage {
-      width: 475px;
+      width: 80vw;
+      max-width: 450px;
       transform: translateY(-100%);
       animation: dropIn 1.2s ease forwards;
     }
-    @keyframes dropIn { to { transform: translateY(0); } }
-    .charSelect { margin-top: 20px; display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+
+    @keyframes dropIn {
+      to { transform: translateY(0); }
+    }
+
+    .charSelect {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+
     .charBtn {
       padding: 12px 24px;
-      font-size: 22px;
+      font-size: clamp(16px, 2.5vw, 22px);
       font-weight: bold;
       border: none;
       border-radius: 12px;
       cursor: pointer;
       background: #ff69b4;
       color: white;
-      transition: transform 0.2s;
+      transition: transform 0.2s, background 0.2s;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
     }
-    .charBtn:hover { transform: scale(1.1); }
 
-    /* --- Return Button (when game ends) --- */
+    .charBtn:active {
+      transform: scale(0.95);
+      background: #ff85c1;
+    }
+
+    /* --- Return Button --- */
     #returnBtn {
       position: fixed;
-      bottom: 890px;
-      right: 20px;
+      top: 10px;
+      right: 10px;
       padding: 10px 18px;
-      font-size: 18px;
+      font-size: clamp(14px, 2vw, 18px);
       border: none;
       border-radius: 10px;
       background: #333;
@@ -107,7 +145,21 @@
       display: none;
       z-index: 15;
     }
+
     #returnBtn:hover { background: #555; }
+
+    /* --- Mobile adjustments --- */
+    @media (max-width: 600px) {
+      #dpad {
+        grid-template-columns: 50px 50px 50px;
+        grid-template-rows: 50px 50px;
+      }
+      #actionBtn {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -125,16 +177,20 @@
   <canvas id="game" width="800" height="775"></canvas>
   <audio id="coinSound" src="coin.wav" preload="auto"></audio>
 
-  <!-- DPad container -->
+  <!-- DPad -->
   <div id="dpad">
-    <div></div> <div class="btn" data-key="ArrowUp">⬆️</div> <div></div>
-    <div class="btn" data-key="ArrowLeft">⬅️</div> <div></div> <div class="btn" data-key="ArrowRight">➡️</div>
+    <div></div>
+    <div class="btn" data-key="ArrowUp">⬆️</div>
+    <div></div>
+    <div class="btn" data-key="ArrowLeft">⬅️</div>
+    <div></div>
+    <div class="btn" data-key="ArrowRight">➡️</div>
   </div>
 
-  <!-- Action Button (Spacebar Equivalent) -->
+  <!-- Action Button -->
   <div id="actionBtn">🅰️</div>
 
-  <!-- Return to Menu -->
+  <!-- Return Button -->
   <button id="returnBtn">⬅️ Return to Menu</button>
 
   <script>
@@ -143,19 +199,18 @@
 
     // Load external JS dynamically
     function loadScript(file) {
-      if (activeScript) activeScript.remove(); // clean up old game script
-
+      if (activeScript) activeScript.remove();
       const script = document.createElement("script");
-      script.src = file + "?v=" + Date.now(); // prevent caching
-      script.onload = () => console.log(file + " loaded successfully ✅");
+      script.src = file + "?v=" + Date.now();
+      script.onload = () => console.log(file + " loaded ✅");
       script.onerror = () => console.error("Failed to load " + file);
       document.body.appendChild(script);
       activeScript = script;
     }
 
-    // Show the title screen again (called from games)
+    // Return to menu
     window.returnToMenu = function() {
-      window.location.reload(); // Simple reload to reset state
+      window.location.reload();
       if (activeScript) activeScript.remove();
       document.getElementById("titleScreen").style.display = "flex";
       document.getElementById("returnBtn").style.display = "none";
@@ -173,20 +228,19 @@
       });
     });
 
-    // Manual return button
+    // Return button
     document.getElementById("returnBtn").addEventListener("click", window.returnToMenu);
 
-    // --- Action Button (Spacebar Trigger) ---
+    // Action button for spacebar trigger
     const actionBtn = document.getElementById("actionBtn");
-    actionBtn.addEventListener("click", () => {
-      // Dispatch a keyboard event for the spacebar
+    const triggerSpace = () => {
       const spaceEvent = new KeyboardEvent("keydown", { key: " " });
       document.dispatchEvent(spaceEvent);
-    });
-    actionBtn.addEventListener("touchstart", (e) => {
+    };
+    actionBtn.addEventListener("click", triggerSpace);
+    actionBtn.addEventListener("touchstart", e => {
       e.preventDefault();
-      const spaceEvent = new KeyboardEvent("keydown", { key: " " });
-      document.dispatchEvent(spaceEvent);
+      triggerSpace();
     }, { passive: false });
   </script>
 </body>
