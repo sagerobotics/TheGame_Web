@@ -1,0 +1,271 @@
+/* --- General Page Layout --- */
+body {
+  margin: 0;
+  background: #87CEEB;
+  overflow: hidden;
+  font-family: system-ui, -apple-system, sans-serif;
+  touch-action: manipulation;
+}
+
+canvas {
+  display: block;
+  margin: auto;
+  background: #87CEEB;
+  width: 100%;
+  height: auto;
+  max-width: 800px;
+}
+
+/* --- Responsive DPad --- */
+#dpad {
+  position: fixed;
+  bottom: 5vh;
+  left: 5vw;
+  display: grid;
+  grid-template-columns: 60px 60px 60px;
+  grid-template-rows: 60px 60px;
+  gap: 6px;
+  touch-action: none;
+  user-select: none;
+  z-index: 5;
+}
+
+.btn {
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+  font-size: 28px;
+  font-weight: bold;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.btn:active {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+/* --- Action Button --- */
+#actionBtn {
+  position: fixed;
+  bottom: 6vh;
+  right: 6vw;
+  width: 70px;
+  height: 70px;
+  background: rgba(0,0,0,0.5);
+  color: white;
+  border: 3px solid rgba(255,255,255,0.7);
+  border-radius: 50%;
+  font-size: 26px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 6;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+#actionBtn:active {
+  background: rgba(0,0,0,0.8);
+  transform: scale(0.95);
+}
+
+/* --- Title screen overlay --- */
+#titleScreen {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #87CEEB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 10;
+  padding: 5vw;
+  overflow: hidden;
+  text-align: center;
+}
+
+#titleImage {
+  width: 80vw;
+  max-width: 450px;
+  transform: translateY(-100%);
+  animation: dropIn 1.2s ease forwards;
+}
+
+#waywoodLogo {
+  width: 80vw;
+  max-width: 150px;
+  transform: translateY(-100%);
+  animation: dropIn 1.2s ease forwards;
+}
+
+@keyframes dropIn {
+  to { transform: translateY(0); }
+}
+
+.charSelect {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
+
+.charBtn {
+  padding: 12px 24px;
+  font-size: clamp(16px, 2.5vw, 22px);
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  background: #ff69b4;
+  color: white;
+  transition: transform 0.2s, background 0.2s;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+}
+
+.charBtn:active {
+  transform: scale(0.95);
+  background: #ff85c1;
+}
+
+/* --- Return Button --- */
+#returnBtn {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  padding: 10px 18px;
+  font-size: clamp(14px, 2vw, 18px);
+  border: none;
+  border-radius: 10px;
+  background: #333;
+  color: white;
+  cursor: pointer;
+  display: none;
+  z-index: 15;
+}
+
+#returnBtn:hover {
+  background: #555;
+}
+
+/* --- Mobile adjustments --- */
+@media (max-width: 600px) {
+  #dpad {
+    grid-template-columns: 50px 50px 50px;
+    grid-template-rows: 50px 50px;
+  }
+
+  #actionBtn {
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+  }
+}
+
+/* --- Top-right Thank You Section --- */
+#thankYouContainer {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  text-align: center;
+  z-index: 12;
+}
+
+/* Text styling */
+#thankYouText {
+  margin: 0;
+  font-size: clamp(16px, 2vw, 22px);
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+
+/* Waywood logo directly below text */
+#waywoodLogo {
+  display: block;
+  margin: 6px auto 0;
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  animation: pulse 1.5s infinite;
+}
+
+/* Pulse animation */
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+  to { transform: rotate(360deg); }
+
+  /* --- Make Waywood logo clickable --- */
+#waywoodLink {
+  display: inline-block;
+  text-decoration: none;
+}
+
+#waywoodLink:hover #waywoodLogo {
+  transform: scale(1.1) rotate(10deg);
+  transition: transform 0.3s ease;
+}
+
+/* --- Clickable Waywood logo --- */
+#waywoodLink {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* --- Tooltip styling --- */
+.tooltipText {
+  visibility: hidden;
+  width: 160px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 6px 8px;
+  position: absolute;
+  z-index: 15;
+  bottom: 110%; /* Position tooltip above the logo */
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+/* Small arrow under tooltip */
+.tooltipText::after {
+  content: "";
+  position: absolute;
+  top: 100%; /* Arrow points down */
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: rgba(0,0,0,0.8) transparent transparent transparent;
+}
+
+/* --- Show tooltip on hover --- */
+#waywoodLink:hover .tooltipText {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* --- Optional hover animation for the logo --- */
+#waywoodLink:hover #waywoodLogo {
+  transform: scale(1.1) rotate(10deg);
+  transition: transform 0.3s ease;
+}
+
+
+
+
+

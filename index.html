@@ -4,174 +4,34 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <title>Ava & Alyssa's Adventure — Game Select</title>
-  <style>
-    body {
-      margin: 0;
-      background: #87CEEB;
-      overflow: hidden;
-      font-family: system-ui, -apple-system, sans-serif;
-      touch-action: manipulation;
-    }
 
-    canvas {
-      display: block;
-      margin: auto;
-      background: #87CEEB;
-      width: 100%;
-      height: auto;
-      max-width: 800px;
-    }
-
-    /* --- Responsive DPad --- */
-    #dpad {
-      position: fixed;
-      bottom: 5vh;
-      left: 5vw;
-      display: grid;
-      grid-template-columns: 60px 60px 60px;
-      grid-template-rows: 60px 60px;
-      gap: 6px;
-      touch-action: none;
-      user-select: none;
-      z-index: 5;
-    }
-
-    .btn {
-      background: rgba(0, 0, 0, 0.4);
-      color: white;
-      font-size: 28px;
-      font-weight: bold;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: background 0.15s ease;
-    }
-
-    .btn:active { background: rgba(0, 0, 0, 0.7); }
-
-    /* --- Action Button --- */
-    #actionBtn {
-      position: fixed;
-      bottom: 6vh;
-      right: 6vw;
-      width: 70px;
-      height: 70px;
-      background: rgba(0,0,0,0.5);
-      color: white;
-      border: 3px solid rgba(255,255,255,0.7);
-      border-radius: 50%;
-      font-size: 26px;
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      z-index: 6;
-      user-select: none;
-      touch-action: manipulation;
-    }
-
-    #actionBtn:active {
-      background: rgba(0,0,0,0.8);
-      transform: scale(0.95);
-    }
-
-    /* --- Title screen overlay --- */
-    #titleScreen {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: #87CEEB;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      z-index: 10;
-      padding: 5vw;
-      overflow: hidden;
-      text-align: center;
-    }
-
-    #titleImage {
-      width: 80vw;
-      max-width: 450px;
-      transform: translateY(-100%);
-      animation: dropIn 1.2s ease forwards;
-    }
-
-    @keyframes dropIn {
-      to { transform: translateY(0); }
-    }
-
-    .charSelect {
-      margin-top: 20px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-    }
-
-    .charBtn {
-      padding: 12px 24px;
-      font-size: clamp(16px, 2.5vw, 22px);
-      font-weight: bold;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      background: #ff69b4;
-      color: white;
-      transition: transform 0.2s, background 0.2s;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
-    }
-
-    .charBtn:active {
-      transform: scale(0.95);
-      background: #ff85c1;
-    }
-
-    /* --- Return Button --- */
-    #returnBtn {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      padding: 10px 18px;
-      font-size: clamp(14px, 2vw, 18px);
-      border: none;
-      border-radius: 10px;
-      background: #333;
-      color: white;
-      cursor: pointer;
-      display: none;
-      z-index: 15;
-    }
-
-    #returnBtn:hover { background: #555; }
-
-    /* --- Mobile adjustments --- */
-    @media (max-width: 600px) {
-      #dpad {
-        grid-template-columns: 50px 50px 50px;
-        grid-template-rows: 50px 50px;
-      }
-      #actionBtn {
-        width: 60px;
-        height: 60px;
-        font-size: 24px;
-      }
-    }
-  </style>
+  <!-- ✅ External stylesheet -->
+<link rel="stylesheet" href="sagestyle.css" />
 </head>
 <body>
   <!-- Title Screen -->
   <div id="titleScreen">
+    <!-- ✅ Top-right thank-you section -->
+    <div id="thankYouContainer">
+      <h2 id="thankYouText">Thank you for supporting us!</h2>
+      <!-- ✅ Clickable logo link -->
+<a href="https://www.waywoodms.com/" target="_blank" rel="noopener" id="waywoodLink">
+  <img id="waywoodLogo" src="waywood.png" alt="Waywood Logo" />
+<span class="tooltipText">Visit Waywood Mississippi</span>
+</a>
+    </div>
+
+    <!-- Main Title -->
     <img id="titleImage" src="titleprime.png" alt="Title Logo" />
+
     <div class="charSelect">
       <button class="charBtn" data-game="frogger.js">🐸 Play Frogger</button>
       <button class="charBtn" data-game="game.js">🎮 Adventure Girl (In Development)</button>
       <button class="charBtn" data-game="spaceinvaders.js">⭐ Space Invaders</button>
     </div>
   </div>
+
+
 
   <!-- Game Canvas -->
   <canvas id="game" width="800" height="775"></canvas>
