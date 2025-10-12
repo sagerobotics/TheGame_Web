@@ -55,7 +55,7 @@ function drawBackground() {
   ctx.fillRect(0, 0, canvas.width, tile);
 
   // Draw centered white text
-  const text = "Ava and Alyssa Thank You for Supporting Our Dance Dreams!";
+  const text = "❤️Thank You for Supporting Our Dance Dreams! ❤️ Ava & Alyssa ";
   ctx.fillStyle = "#FFFFFF";          // white text
   ctx.font = "24px Arial";            // font size and family
   ctx.textAlign = "center";           // horizontal center

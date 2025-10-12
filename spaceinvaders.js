@@ -11,6 +11,11 @@
   }
   const ctx = canvas.getContext("2d");
 
+  // --- Invader Image ---
+const invaderImg = new Image();
+invaderImg.src = "pyramid.png"; // path to your image
+
+
   // --- Game State ---
   let lastTime = 0;
   let playing = true;
@@ -288,7 +293,7 @@
       y: shooter.y + shooter.h + 6,
       w: 8,
       h: 12,
-      speed: 220 + level * 30,
+      speed: 900 + level * 300,
     });
   }
 
@@ -388,11 +393,12 @@
     ctx.fillStyle = "lime";
     ctx.fillRect(player.x, player.y, player.w, player.h);
 
-    // Invaders
-    ctx.fillStyle = "red";
-    for (const inv of invaders) {
-      if (inv.alive) ctx.fillRect(inv.x, inv.y, inv.w, inv.h);
-    }
+   // Invaders as images
+for (const inv of invaders) {
+  if (inv.alive) {
+    ctx.drawImage(invaderImg, inv.x, inv.y, inv.w, inv.h);
+  }
+}
 
     // Bullets
     ctx.fillStyle = "yellow";
