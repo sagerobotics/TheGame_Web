@@ -27,7 +27,7 @@ function createCars() {
       y: i * tile + 10,
       width: 60,
       height: 30,
-      speed: 1.5 + Math.random() * 2.5,
+      speed: 5.8 + Math.random() * 2.5,
       dir: isRight ? 1 : -1
     });
   }
@@ -50,23 +50,62 @@ function checkCollision(a, b) {
 
 // --- Drawing ---
 function drawBackground() {
+  // Draw the background rectangle
   ctx.fillStyle = '#00008B';
   ctx.fillRect(0, 0, canvas.width, tile);
+
+  // Draw centered white text
+  const text = "Ava and Alyssa Thank You for Supporting Our Dance Dreams!";
+  ctx.fillStyle = "#FFFFFF";          // white text
+  ctx.font = "24px Arial";            // font size and family
+  ctx.textAlign = "center";           // horizontal center
+  ctx.textBaseline = "middle";        // vertical center
+  ctx.fillText(text, canvas.width / 2, tile / 2);
 }
+
+
+// Load the frog image once
+const frogImg = new Image();
+frogImg.src = 'frog.png'; // Ensure the path is correct
 
 function drawPlayer() {
-  ctx.fillStyle = '#32CD32';
-  ctx.beginPath();
-  ctx.arc(player.x * tile + tile / 2, player.y * tile + tile / 2, tile / 2.5, 0, Math.PI * 2);
-  ctx.fill();
-}
+  const centerX = player.x * tile + tile / 2;
+  const centerY = player.y * tile + tile / 2;
+  const size = tile * 0.9; // slightly smaller than tile for padding
 
-function drawCars() {
-  ctx.fillStyle = '#FF4500';
-  for (let car of cars) {
-    ctx.fillRect(car.x, car.y, car.width, car.height);
+  // Draw the image only when it's loaded
+  if (frogImg.complete) {
+    ctx.drawImage(frogImg, centerX - size / 2, centerY - size / 2, size, size);
+  } else {
+    frogImg.onload = () => {
+      ctx.drawImage(frogImg, centerX - size / 2, centerY - size / 2, size, size);
+    };
   }
 }
+
+
+// Load the Barbie image once
+const barbieImg = new Image();
+barbieImg.src = 'barbie.png'; // make sure the path is correct
+
+function drawCars() {
+  for (let car of cars) {
+    const centerX = car.x + car.width / 2;
+    const centerY = car.y + car.height / 2;
+    const sizeX = car.width;  // width of image, match car width
+    const sizeY = car.height; // height of image, match car height
+
+    // Draw the image only if it's loaded
+    if (barbieImg.complete) {
+      ctx.drawImage(barbieImg, centerX - sizeX / 2, centerY - sizeY / 2, sizeX, sizeY);
+    } else {
+      barbieImg.onload = () => {
+        ctx.drawImage(barbieImg, centerX - sizeX / 2, centerY - sizeY / 2, sizeX, sizeY);
+      };
+    }
+  }
+}
+
 
 // --- Update ---
 function updateCars() {
