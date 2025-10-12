@@ -89,7 +89,7 @@ const flag = {
 
 let cameraX = 0;
 const girlImg = new Image();
-girlImg.src = "girl.png";
+girlImg.src = "newgirl2.png";
 
 girlImg.onload = () => {
     console.log("Sprite sheet loaded", girlImg.width, girlImg.height);
@@ -407,5 +407,6 @@ function drawBeamEffect(player) {
 
 function loop() { update(); draw(); requestAnimationFrame(loop); }
 loop();
+
 
 
