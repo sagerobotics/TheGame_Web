@@ -105,7 +105,7 @@ let frameTimer = 0;
 let frameInterval = 8;
 
 const badguyImg = new Image();
-badguyImg.src = "badguy.png";
+badguyImg.src = "badcat.png";
 
 const coins = [
     { x: 220, y: 220, collected: false },
@@ -277,12 +277,9 @@ if (actionBtn) {
 }
 
 function draw() {
+    
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "#87CEEB"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // Platforms
-    ctx.fillStyle = "#654321";
-    for (let p of platforms) ctx.fillRect(p.x - cameraX, p.y, p.w, p.h);
 
     // Pole
     ctx.fillStyle = pole.color;
@@ -316,6 +313,10 @@ function draw() {
         ctx.fill();
     }
 
+     // Platforms
+    ctx.fillStyle = "#654321";
+    for (let p of platforms) ctx.fillRect(p.x - cameraX, p.y, p.w, p.h);
+
     // Coins
     ctx.fillStyle = "gold";
     for (let c of coins) {
@@ -327,7 +328,7 @@ function draw() {
         }
     }
 
-    // Enemies
+   // Enemies
     for (let e of enemies) {
         if (e.dead) continue;
         if (badguyImg.complete && badguyImg.naturalWidth !== 0) {
@@ -362,6 +363,8 @@ function draw() {
         ctx.font = "20px sans-serif";
         ctx.fillText("Press R to refresh", canvas.width / 2, canvas.height / 2 + 20);
     }
+
+     
 
     // Score
     ctx.textAlign = "left";
