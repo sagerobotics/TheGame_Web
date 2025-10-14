@@ -4,9 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <title>Ava & Alyssa's Adventure — Game Select</title>
-
-  <!-- ✅ External stylesheet -->
-<link rel="stylesheet" href="sagestyle.css" />
+  <link rel="stylesheet" href="sagestyle.css" />
 </head>
 <body>
   <!-- Title Screen -->
@@ -14,11 +12,14 @@
     <!-- ✅ Top-right thank-you section -->
     <div id="thankYouContainer">
       <h2 id="thankYouText">Thank you for supporting us!</h2>
-      <!-- ✅ Clickable logo link -->
-<a href="https://www.waywoodms.com/" target="_blank" rel="noopener" id="waywoodLink">
-  <img id="waywoodLogo" src="waywood.png" alt="Waywood Logo" />
-<span class="tooltipText">Visit Waywood Mississippi</span>
-</a>
+      <a href="https://www.waywoodms.com/" target="_blank" rel="noopener" id="waywoodLink">
+        <img id="waywoodLogo" src="waywood.png" alt="Waywood Logo" />
+        <span class="tooltipText">Visit Waywood Mississippi</span>
+      </a>
+      <a href="https://www.facebook.com/sagerobots/" target="_blank" rel="noopener" id="sageLink">
+        <img id="sagelogo" src="Sagelogo.png" alt="Sage Logo" />
+        <span class="tooltipText">Visit Sage Robotics on facebook</span>
+      </a>
     </div>
 
     <!-- Main Title -->
@@ -31,11 +32,12 @@
     </div>
   </div>
 
-
-
   <!-- Game Canvas -->
   <canvas id="game" width="800" height="775"></canvas>
+
+  <!-- Audio -->
   <audio id="coinSound" src="coin.wav" preload="auto"></audio>
+  <audio id="bgMusic" src="thememusic.mp3" loop></audio>
 
   <!-- DPad -->
   <div id="dpad">
@@ -54,10 +56,24 @@
   <button id="returnBtn">⬅️ Return to Menu</button>
 
   <script>
+    // --- Global Variables ---
     window.selectedCharacter = null;
     let activeScript = null;
+    const bgMusic = document.getElementById("bgMusic");
 
-    // Load external JS dynamically
+    // --- Play Background Music Safely ---
+    function playMusic() {
+      bgMusic.volume = 0.5;
+      bgMusic.play().catch(err => console.warn("⚠️ Audio playback blocked until user action:", err));
+    }
+
+    // --- Stop Background Music ---
+    function stopMusic() {
+      bgMusic.pause();
+      bgMusic.currentTime = 0;
+    }
+
+    // --- Load external JS dynamically ---
     function loadScript(file) {
       if (activeScript) activeScript.remove();
       const script = document.createElement("script");
@@ -68,8 +84,9 @@
       activeScript = script;
     }
 
-    // Return to menu
+    // --- Return to menu ---
     window.returnToMenu = function() {
+      stopMusic(); // ✅ stop background music when leaving game
       window.location.reload();
       if (activeScript) activeScript.remove();
       document.getElementById("titleScreen").style.display = "flex";
@@ -78,20 +95,23 @@
       ctx.clearRect(0, 0, 800, 775);
     };
 
-    // Menu buttons
+    // --- Menu Buttons ---
     document.querySelectorAll(".charBtn").forEach(btn => {
       btn.addEventListener("click", () => {
         const file = btn.getAttribute("data-game");
         document.getElementById("titleScreen").style.display = "none";
         document.getElementById("returnBtn").style.display = "block";
         loadScript(file);
+
+        // ✅ Play music ONLY when a game starts
+        playMusic();
       });
     });
 
-    // Return button
+    // --- Return Button ---
     document.getElementById("returnBtn").addEventListener("click", window.returnToMenu);
 
-    // Action button for spacebar trigger
+    // --- Action Button (Triggers Spacebar) ---
     const actionBtn = document.getElementById("actionBtn");
     const triggerSpace = () => {
       const spaceEvent = new KeyboardEvent("keydown", { key: " " });
@@ -102,6 +122,14 @@
       e.preventDefault();
       triggerSpace();
     }, { passive: false });
+
+    // --- Optional: Unlock Audio Context ---
+    window.addEventListener("pointerdown", () => {
+      bgMusic.play().then(() => {
+        bgMusic.pause();
+        bgMusic.currentTime = 0;
+      }).catch(() => {});
+    }, { once: true });
   </script>
 </body>
 </html>

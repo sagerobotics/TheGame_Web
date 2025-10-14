@@ -112,11 +112,22 @@ const coins = [
     { x: 420, y: 160, collected: false },
     { x: 620, y: 110, collected: false },
     { x: 960, y: 200, collected: false },
+    { x: 960, y: 200, collected: false },
+    { x: 1170, y: 130, collected: false },
+    { x: 1320, y: 120, collected: false },
+    { x: 1520, y: 120, collected: false },
+    { x: 1720, y: 130, collected: false },
 ];
 
 const enemies = [
     { x: 300, y: 288, w: 32, h: 32, dir: 1, speed: 1.4, min: 280, max: 340 },
     { x: 500, y: 288, w: 32, h: 32, dir: -1, speed: 1.2, min: 460, max: 540 },
+    { x: 700, y: 288, w: 32, h: 32, dir: 1, speed: 1.4, min: 680, max: 740 },
+    { x: 1000, y: 228, w: 32, h: 32, dir: -1, speed: 1.6, min: 960, max: 1120 },
+    { x: 1200, y: 138, w: 32, h: 32, dir: 1, speed: 1.4, min: 1150, max: 1250 },
+    { x: 1400, y: 128, w: 32, h: 32, dir: -1, speed: 1.2, min: 1350, max: 1450 },
+    { x: 1600, y: 138, w: 32, h: 32, dir: 1, speed: 1.4, min: 1550, max: 1650 },
+    { x: 1800, y: 178, w: 32, h: 32, dir: -1, speed: 1.6, min: 1750, max: 1850 },   
 ];
 
 // Beam state
@@ -124,6 +135,7 @@ let beaming = false;
 let beamTimer = 0;
 
 // --- Game functions ---
+
 function resetGame() {
     player.x = 50; player.y = 0; player.vx = 0; player.vy = 0;
     player.alive = true; player.score = 0;
@@ -270,6 +282,7 @@ if (actionBtn) {
         }
     }
 }
+
 
 
 
