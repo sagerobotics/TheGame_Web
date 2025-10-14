@@ -53,7 +53,7 @@ const friction = 0.86;
 const maxSpeed = 6;
 const player = { x: 50, y: -300, width: 100, height: 120, vx: 0, vy: 0, onGround: false, alive: true, score: 0 };
 const playerImage = new Image();
-playerImage.src = window.selectedCharacter || "girl-Ava.png"; // fallback default
+playerImage.src = window.selectedCharacter || "Newgirl2.png"; // fallback default
 player.image = playerImage;
 
 
@@ -89,7 +89,7 @@ const flag = {
 
 let cameraX = 0;
 const girlImg = new Image();
-girlImg.src = "girl.png";
+girlImg.src = "Newgirl2.png";
 
 girlImg.onload = () => {
     console.log("Sprite sheet loaded", girlImg.width, girlImg.height);
@@ -105,7 +105,7 @@ let frameTimer = 0;
 let frameInterval = 8;
 
 const badguyImg = new Image();
-badguyImg.src = "badcat.png";
+badguyImg.src = "frog.png";
 
 const coins = [
     { x: 220, y: 220, collected: false },
