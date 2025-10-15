@@ -107,6 +107,17 @@ let frameInterval = 8;
 const badguyImg = new Image();
 badguyImg.src = "/Assets/Images/frog.png";
 
+const signImg = new Image();
+signImg.src = "/Assets/Images/crossroads.png";
+signImg.onload = () => {
+  console.log("Sign image loaded ✅");
+    
+  
+  
+};
+
+
+
 const coins = [
     { x: 220, y: 220, collected: false },
     { x: 420, y: 160, collected: false },
@@ -129,6 +140,8 @@ const enemies = [
     { x: 1600, y: 138, w: 32, h: 32, dir: 1, speed: 1.4, min: 1550, max: 1650 },
     { x: 1800, y: 150, w: 32, h: 32, dir: -1, speed: 1.6, min: 1750, max: 1850 },   
 ];
+
+//signImg = [{ x: 750, y: 280, w: 64, h: 64 }];
 
 // Beam state
 let beaming = false;
@@ -294,6 +307,8 @@ function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "#87CEEB"; ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+   
+
     // Pole
     ctx.fillStyle = pole.color;
     ctx.fillRect(pole.x - cameraX, pole.y, pole.w, pole.h);
@@ -341,6 +356,9 @@ function draw() {
         }
     }
 
+
+     
+
    // Enemies
     for (let e of enemies) {
         if (e.dead) continue;
@@ -377,7 +395,8 @@ function draw() {
         ctx.fillText("Press R to refresh", canvas.width / 2, canvas.height / 2 + 20);
     }
 
-     
+     // Sign
+    ctx.drawImage(signImg, 785 - cameraX, 235, 100, 80);
 
     // Score
     ctx.textAlign = "left";

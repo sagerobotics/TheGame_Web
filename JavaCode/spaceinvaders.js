@@ -13,7 +13,7 @@
 
   // --- Invader Image ---
 const invaderImg = new Image();
-invaderImg.src = "pyramid.png"; // path to your image
+invaderImg.src = "/Assets/Images/pyramid.png"; // path to your image
 
 
   // --- Game State ---
