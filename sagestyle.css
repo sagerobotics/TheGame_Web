@@ -114,6 +114,38 @@ canvas {
   to { transform: translateY(0); }
 }
 
+.support-button {
+  position:;
+  top: 420px;
+  left: 200px;
+  padding: 10px 20px;
+  background-color: #ff69b4;
+  color: white;
+  font-size: clamp(14px, 2vw, 18px);
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  text-decoration: none;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+  transition: background-color 0.3s, transform 0.2s;
+  z-index: 15;
+}
+.support-button:hover {
+  background-color: #ff85c1;
+  transform: scale(1.05);
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.1); }
+  50% { transform: scale(0.95); }
+  75% { transform: scale(1.05); }
+}
+
+.support-button {
+  animation: heartbeat 2s infinite;
+}
+
 .charSelect {
   margin-top: 20px;
   display: flex;
@@ -303,6 +335,10 @@ canvas {
   transform: scale(1.1) rotate(10deg);
   transition: transform 0.3s ease;
 }
+
+
+
+
 
 
 
