@@ -115,10 +115,9 @@ canvas {
 }
 
 .support-button {
-  position:;
-  top: 420px;
-  left: 200px;
-  padding: 10px 20px;
+  position: relative;
+  margin: 20px auto 0;
+   padding: 12px 24px;
   background-color: #ff69b4;
   color: white;
   font-size: clamp(14px, 2vw, 18px);
