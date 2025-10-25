@@ -58,7 +58,7 @@ player.image = playerImage;
 
 
 const platforms = [
-    { x: 0, y: 320, w: 2000, h: 40 },   // ground
+    { x: 0, y: 320, w: 3000, h: 40 },   // ground
     { x: 200, y: 260, w: 80, h: 20 },   // floating platform1
     { x: 400, y: 200, w: 80, h: 20 },   // floating platform2
     { x: 600, y: 180, w: 80, h: 20 },   // floating platform3
@@ -110,11 +110,23 @@ badguyImg.src = "/Assets/Images/frog.png";
 const signImg = new Image();
 signImg.src = "/Assets/Images/crossroads.png";
 signImg.onload = () => {
-  console.log("Sign image loaded ✅");
+  console.log("Sign image loaded ✅")};
     
-  
+ const robovillImg = new Image();
+robovillImg.src = "/Assets/Images/robovill.png";
+robovillImg.onload = () => {
+  console.log("RoboVill image loaded ✅");
   
 };
+
+// RoboVill (enemy boss)
+const robovill = {
+  x: pole.x + 50, // 200px after the flagpole
+  y: 100,          // adjust depending on your ground height
+  w: 200,          // width
+  h: 240           // height
+};
+
 
 
 
@@ -317,6 +329,20 @@ function draw() {
     ctx.fillStyle = flag.color;
     ctx.fillRect(flag.x - cameraX, flag.y, flag.w, flag.h);
 
+
+    // Flag
+ctx.fillStyle = flag.color;
+ctx.fillRect(flag.x - cameraX, flag.y, flag.w, flag.h);
+
+// RoboVill image
+if (robovillImg.complete && robovillImg.naturalWidth !== 0) {
+  ctx.drawImage(robovillImg, robovill.x - cameraX, robovill.y, robovill.w, robovill.h);
+} else {
+  ctx.fillStyle = "gray";
+  ctx.fillRect(robovill.x - cameraX, robovill.y, robovill.w, robovill.h);
+}
+
+
     // Clouds
     for (let i = 0; i < 5; i++) {
         const cloudX = (i * 200 - cameraX * 0.3) % (canvas.width + 100);
@@ -369,6 +395,8 @@ function draw() {
         }
     }
 
+
+
     // Player or Beam
     if (player.alive && !beaming) {
         if (girlImg.complete && girlImg.naturalWidth !== 0) {
@@ -390,8 +418,8 @@ function draw() {
         ctx.fillStyle = "black";
         ctx.font = "bold 40px sans-serif";
         ctx.textAlign = "center";
-        ctx.fillText("GAME OVER", canvas.width / 2, canvas.height / 2 - 20);
-        ctx.font = "20px sans-serif";
+        ctx.fillText("GAME OVER!? - PART 2 COMING SOON", canvas.width / 2, canvas.height / 2 - 20);
+        ctx.font = "16px sans-serif";
         ctx.fillText("Press R to refresh", canvas.width / 2, canvas.height / 2 + 20);
     }
 
@@ -442,6 +470,3 @@ function drawBeamEffect(player) {
 
 function loop() { update(); draw(); requestAnimationFrame(loop); }
 loop();
-
-
-
